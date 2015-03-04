@@ -8,7 +8,7 @@ namespace Spotify_Exam {
 	public class AuthController : Controller {
 		// GET: Auth
 		public ActionResult Index() {
-			throw new HttpException(404);
+			return this.HttpNotFound();
 		}
 	}
 }
