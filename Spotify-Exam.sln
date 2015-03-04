@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22609.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify-Exam", "Spotify-Exam\Spotify-Exam.csproj", "{11E80B7D-CC1B-442F-8184-509A96B7BCFF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1858304D-5431-4635-ABB7-044C8554AEC2} = {1858304D-5431-4635-ABB7-044C8554AEC2}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyExam.Core", "SpotifyExam.Core\SpotifyExam.Core.csproj", "{1858304D-5431-4635-ABB7-044C8554AEC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11E80B7D-CC1B-442F-8184-509A96B7BCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E80B7D-CC1B-442F-8184-509A96B7BCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E80B7D-CC1B-442F-8184-509A96B7BCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E80B7D-CC1B-442F-8184-509A96B7BCFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1858304D-5431-4635-ABB7-044C8554AEC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1858304D-5431-4635-ABB7-044C8554AEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1858304D-5431-4635-ABB7-044C8554AEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1858304D-5431-4635-ABB7-044C8554AEC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
