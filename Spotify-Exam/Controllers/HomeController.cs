@@ -18,8 +18,6 @@ namespace Spotify_Exam.Controllers {
 		public ActionResult Index() {
 
 
-			ViewBag.SpotifyUrl = this.SpotifyClient.GenerateRedirectURL("playlist-read-private", false);
-
 			if (this.User.Identity.IsAuthenticated && this.Session["UserInfo"] != null) {
 
 				var userInfo = this.Session["UserInfo"] as UserInfo;
@@ -33,6 +31,7 @@ namespace Spotify_Exam.Controllers {
 			}
 			else {
 				FormsAuthentication.SignOut();
+				ViewBag.SpotifyUrl = this.SpotifyClient.GenerateRedirectURL("playlist-read-private", false);
 			}
 
 			return View();

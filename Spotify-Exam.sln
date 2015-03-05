@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22609.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify-Exam", "Spotify-Exam\Spotify-Exam.csproj", "{11E80B7D-CC1B-442F-8184-509A96B7BCFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify-Exam.Web", "Spotify-Exam\Spotify-Exam.Web.csproj", "{11E80B7D-CC1B-442F-8184-509A96B7BCFF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1858304D-5431-4635-ABB7-044C8554AEC2} = {1858304D-5431-4635-ABB7-044C8554AEC2}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyExam.Core", "SpotifyExam.Core\SpotifyExam.Core.csproj", "{1858304D-5431-4635-ABB7-044C8554AEC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyExam.Tests", "SpotifyExam.Tests\SpotifyExam.Tests.csproj", "{A73F7711-D106-43B0-AB73-0CE7D5C3E95B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyExam.Tests", "SpotifyExam.Tests\SpotifyExam.Tests.csproj", "{9345DBC2-B8EC-44E4-8CB3-903132FFE290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +26,10 @@ Global
 		{1858304D-5431-4635-ABB7-044C8554AEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1858304D-5431-4635-ABB7-044C8554AEC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1858304D-5431-4635-ABB7-044C8554AEC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A73F7711-D106-43B0-AB73-0CE7D5C3E95B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A73F7711-D106-43B0-AB73-0CE7D5C3E95B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A73F7711-D106-43B0-AB73-0CE7D5C3E95B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A73F7711-D106-43B0-AB73-0CE7D5C3E95B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9345DBC2-B8EC-44E4-8CB3-903132FFE290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9345DBC2-B8EC-44E4-8CB3-903132FFE290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9345DBC2-B8EC-44E4-8CB3-903132FFE290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9345DBC2-B8EC-44E4-8CB3-903132FFE290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
