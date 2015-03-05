@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace SpotifyExam.Core.Model {
 	public class UserInfo : BaseSpotifyObject {
@@ -12,5 +13,7 @@ namespace SpotifyExam.Core.Model {
 		[JsonProperty("display_name")]
 		public string DisplayName { get; set; }
 
+		[JsonProperty("images")]
+		public List<UserImage> Images { get; set; }
 	}
 }

@@ -98,12 +98,17 @@ namespace SpotifyExam.Core {
 			IRestRequest request = new RestRequest("/v1/me", Method.GET);
 
 			UserInfo userInfo = this.DoAPIRequest<UserInfo>(request);
-			
+
 			return userInfo;
 		}
 
 		public SpotifyCollection<Playlist> GetUserPlaylistCollection(string userId) {
 
+			IRestRequest request = new RestRequest(string.Format("/v1/users/{0}/playlists", userId), Method.GET);
+
+			SpotifyCollection<Playlist> response = this.DoAPIRequest<SpotifyCollection<Playlist>>(request);
+
+			return null;
 		}
 
 		#region Private Methods
@@ -133,17 +138,18 @@ namespace SpotifyExam.Core {
 		}
 
 		private bool GetAccessToken(string authToken, IRestRequest request) {
-
-			request.AddParameter("grant_type", "authorization_token");
+			
+			request.AddParameter("grant_type", "authorization_code");
 			request.AddParameter("code", authToken);
-			request.AddParameter("request_uri", this.CallbackUrl.ToString());
+			request.AddParameter("redirect_uri", this.CallbackUrl.ToString());
 
 			IRestResponse response = this.AuthClient.Execute(request);
 
 			bool isAuthenticated = false;
 
+			this.AuthenticationData = JsonConvert.DeserializeObject<AuthenticationData>(response.Content);
+
 			if (response.StatusCode == System.Net.HttpStatusCode.OK) {
-				this.AuthenticationData = JsonConvert.DeserializeObject<AuthenticationData>(response.Content);
 				isAuthenticated = true;
 			}
 
@@ -164,8 +170,9 @@ namespace SpotifyExam.Core {
 
 			bool isAuthenticated = false;
 
+			this.AuthenticationData = JsonConvert.DeserializeObject<AuthenticationData>(response.Content);
+
 			if (response.StatusCode == System.Net.HttpStatusCode.OK) {
-				this.AuthenticationData = JsonConvert.DeserializeObject<AuthenticationData>(response.Content);
 				isAuthenticated = true;
 			}
 
