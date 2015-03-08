@@ -12,7 +12,7 @@ namespace SpotifyExam.Core {
 	/// <summary>
 	/// Client para acesso a API do Spotify.
 	/// </summary>
-	public class SpotifyClient {
+	public class SpotifyClient : ISpotifyClient {
 
 		/// <summary>
 		/// URL base da API de autenticação.

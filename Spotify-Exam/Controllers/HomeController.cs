@@ -12,8 +12,14 @@ namespace Spotify_Exam.Controllers {
 	public class HomeController : BaseController {
 
 		public HomeController() {
+			this.AuthenticationProvider = new FormsAuthenticationWrapper();
+        }
 
-		}
+		public HomeController(IAuthenticationProvider authProvider) {
+			this.AuthenticationProvider = authProvider;
+        }
+
+		private IAuthenticationProvider AuthenticationProvider { get; set; }
 
 		public ActionResult Index() {
 
@@ -45,8 +51,8 @@ namespace Spotify_Exam.Controllers {
 				ViewBag.Playlist = finalPlaylist;
 			}
 			else {
-				FormsAuthentication.SignOut();
-				ViewBag.SpotifyUrl = this.SpotifyClient.GenerateRedirectURL(new[] { "playlist-read-private" }, true);
+				this.AuthenticationProvider.SignOut();
+                ViewBag.SpotifyUrl = this.SpotifyClient.GenerateRedirectURL(new[] { "playlist-read-private" }, true);
 			}
 
 			return View();
