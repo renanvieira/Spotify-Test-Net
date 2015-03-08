@@ -31,11 +31,11 @@ namespace SpotifyExam.Core {
 		/// </summary>
 		private const string BASE_API_URL = "https://api.spotify.com";
 
-		public IRestClient AuthClient { get; private set; }
+		private IRestClient AuthClient { get;  set; }
 
-		public IRestClient APIClient { get; private set; }
+		private IRestClient APIClient { get;  set; }
 
-		public string AuthorizationToken { get; private set; }
+		private string AuthorizationToken { get; set; }
 
 		public Uri CallbackUrl { get; private set; }
 
@@ -108,7 +108,20 @@ namespace SpotifyExam.Core {
 
 			SpotifyCollection<Playlist> response = this.DoAPIRequest<SpotifyCollection<Playlist>>(request);
 
-			return null;
+			return response;
+		}
+
+		public SpotifyCollection<PlaylistTrack> GetPlaylistTracks(PlaylistTrackInfo playlistTrack) {
+
+			Uri requestUri = new Uri(playlistTrack.Href);
+
+			IRestRequest request = new RestRequest(requestUri.AbsolutePath, Method.GET);
+
+			SpotifyCollection<PlaylistTrack> response = this.DoAPIRequest<SpotifyCollection<PlaylistTrack>>(request);
+
+			return response;
+
+
 		}
 
 		#region Private Methods

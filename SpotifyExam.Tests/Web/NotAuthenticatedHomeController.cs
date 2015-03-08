@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Xunit;
+using NUnit;
+using NUnit.Framework;
 
 namespace SpotifyExam.Tests.Web {
-	public class NotAuthenticatedHomeControllerTests {
+	[TestFixture]
+    public class NotAuthenticatedHomeControllerTests {
 
-		[Fact]
+		[Test]
 		public void IndexTest() {
 
 			HomeController controller = new HomeController();

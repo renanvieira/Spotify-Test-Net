@@ -4,7 +4,7 @@
 
 @if (ViewBag.UserInfo != null) {
 
-	<div class="jumbotron">
+	<div class="jumbotron center-align">
 
 		<h1>Olá, @ViewBag.UserInfo.DisplayName</h1>
 		<p class="lead">
@@ -21,8 +21,8 @@
 
 	@if (ViewBag.UserInfo == null) {
 
-		<div class="col-md-4">
-			<p>
+		<div class="col-md-12">
+			<p class="center-align lead">
 				<a href="@ViewBag.SpotifyUrl" class="btn btn-lg btn-primary">
 					Entrar no Spotify
 				</a>
@@ -30,6 +30,6 @@
 		</div>
 	}
 	else {
-		@Html.Partial("_Tracks", ViewData)
+		@Html.Partial("_Tracks", ViewBag.Playlist as ICollection<Tuple<char, Track>>)
 	}
 </div>

@@ -17,7 +17,6 @@ namespace Spotify_Exam.Controllers {
 
 		public ActionResult Index() {
 
-
 			if (this.User.Identity.IsAuthenticated && this.Session["UserInfo"] != null) {
 
 				var userInfo = this.Session["UserInfo"] as UserInfo;
@@ -28,6 +27,22 @@ namespace Spotify_Exam.Controllers {
 					ViewBag.UserImage = userInfo.Images[0].Url;
 				}
 
+				SpotifyCollection<Playlist> playlists = this.SpotifyClient.GetUserPlaylistCollection(userInfo.Id);
+
+				List<Track> allTracksCollection = new List<Track>();
+
+				foreach (var item in playlists.Items) {
+					SpotifyCollection<PlaylistTrack> tracks = this.SpotifyClient.GetPlaylistTracks(item.Tracks);
+
+					if (tracks.HasError == false) {
+						allTracksCollection.AddRange(tracks.Items.Select(x => x.Track));
+					}
+
+				}
+
+				ICollection<Tuple<char, Track>> finalPlaylist = Playlist.GeneratePlaylistUsingUserName(userInfo, allTracksCollection);
+
+				ViewBag.Playlist = finalPlaylist;
 			}
 			else {
 				FormsAuthentication.SignOut();

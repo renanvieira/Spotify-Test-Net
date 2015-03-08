@@ -28,7 +28,7 @@ namespace SpotifyExam.Core.Model {
 		public bool HasError {
 			get {
 
-				if (string.IsNullOrWhiteSpace(this.Error) == true || string.IsNullOrWhiteSpace(this.ErrorDescription) == true) {
+				if (string.IsNullOrWhiteSpace(this.Error) == false || string.IsNullOrWhiteSpace(this.ErrorDescription) == false) {
 					return true;
 				}
 

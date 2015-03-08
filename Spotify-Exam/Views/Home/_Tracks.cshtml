@@ -1,1 +1,32 @@
-﻿<h2>Oi.</h2>
+﻿@model ICollection<Tuple<char, Track>>
+
+<table class="table table-bordered table-striped">
+
+	<tbody>
+		@foreach (var item in Model) {
+
+			if (item.Item2 != null) {
+				<tr>
+					<td>
+						<strong>@item.Item1</strong>
+					</td>
+					<td>
+						@item.Item2.Name by <em>@item.Item2.Artists.Select(x => x.Name).Aggregate((current, next) => current + ", " + next)</em>
+					</td>
+				</tr>
+			}
+			else {
+				<tr>
+					<td>
+						&nbsp;
+					</td>
+					<td>
+						&nbsp;
+					</td>
+				</tr>
+			}
+
+		}
+	</tbody>
+
+</table>

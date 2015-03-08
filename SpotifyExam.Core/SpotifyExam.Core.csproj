@@ -76,10 +76,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Artist.cs" />
     <Compile Include="Model\AuthenticationData.cs" />
     <Compile Include="Model\BaseSpotifyObject.cs" />
     <Compile Include="Model\Playlist.cs" />
+    <Compile Include="Model\PlaylistTrack.cs" />
     <Compile Include="Model\SpotifyCollection.cs" />
+    <Compile Include="Model\PlaylistTrackInfo.cs" />
+    <Compile Include="Model\Track.cs" />
     <Compile Include="Model\UserImage.cs" />
     <Compile Include="Mvc\BaseController.cs" />
     <Compile Include="SpotifyClient.cs" />
