@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SpotifyExam.Core.Mvc {
+	/// <summary>
+	/// Classe base para os Controllers da camada Web.
+	/// </summary>
 	public class BaseController : Controller {
 
 		public BaseController() {
 
 		}
 
-
+		/// <summary>
+		/// Método que retorna uma instância (Singleton) do client da API do Spotify que está armazenado na sessão.
+		/// </summary>
+		/// <returns></returns>
 		private SpotifyClient GetClientInstance() {
 
 			if (this.Session["SpotifyClient"] == null) {
@@ -23,6 +29,9 @@ namespace SpotifyExam.Core.Mvc {
 			return (SpotifyClient)this.Session["SpotifyClient"];
 		}
 
+		/// <summary>
+		/// Proprieade para acesso do client da API.
+		/// </summary>
 		protected SpotifyClient SpotifyClient {
 			get {
 				return this.GetClientInstance();

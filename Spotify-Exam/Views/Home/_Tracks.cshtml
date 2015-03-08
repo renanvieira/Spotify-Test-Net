@@ -11,7 +11,7 @@
 						<strong>@item.Item1</strong>
 					</td>
 					<td>
-						@item.Item2.Name by <em>@item.Item2.Artists.Select(x => x.Name).Aggregate((current, next) => current + ", " + next)</em>
+						@item.Item2.Name by <em>@String.Join(", ", item.Item2.Artists.Select(x => x.Name).ToArray())</em>
 					</td>
 				</tr>
 			}

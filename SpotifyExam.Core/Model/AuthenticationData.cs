@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SpotifyExam.Core.Model {
+	/// <summary>
+	/// Classe que armazena os dados de autenticação da API do Spotify.
+	/// </summary>
 	public class AuthenticationData : BaseSpotifyObject {
 
 		public AuthenticationData() {
@@ -36,6 +39,9 @@ namespace SpotifyExam.Core.Model {
 		[JsonProperty("refresh_token")]
 		public string RefreshToken { get; set; }
 
+		/// <summary>
+		/// Data de criação do token.
+		/// </summary>
 		public DateTime CreationDate { get; private set; }
 
 		/// <summary>

@@ -1,9 +1,8 @@
-﻿
-@{
-    ViewBag.Title = "Callback";
+﻿@{
+	ViewBag.Title = "Callback";
 }
 <div class="alert alert-danger" role="alert">
-	<strong>Erro!</strong>
+	<strong>ERRO!</strong>
 	<em>@ViewBag.Error: </em> @ViewBag.ErrorDescription
 </div>
-
+<a href="@Url.Action("Index", "Home")" class="btn btn-lg btn-warning">Voltar</a>

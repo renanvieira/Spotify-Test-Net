@@ -9,17 +9,10 @@ using SpotifyExam.Core.Model;
 
 namespace SpotifyExam.Core {
 
+	/// <summary>
+	/// Client para acesso a API do Spotify.
+	/// </summary>
 	public class SpotifyClient {
-
-		/// <summary>
-		/// Client ID da aplicação cadastrada no Spotify.
-		/// </summary>
-		public string ClientId { get; private set; }
-
-		/// <summary>
-		/// Secret da aplicação  gerada no portal de desenvolvedor do Spotify.
-		/// </summary>
-		private string Secret { get; set; }
 
 		/// <summary>
 		/// URL base da API de autenticação.
@@ -31,16 +24,12 @@ namespace SpotifyExam.Core {
 		/// </summary>
 		private const string BASE_API_URL = "https://api.spotify.com";
 
-		private IRestClient AuthClient { get;  set; }
-
-		private IRestClient APIClient { get;  set; }
-
-		private string AuthorizationToken { get; set; }
-
-		public Uri CallbackUrl { get; private set; }
-
-		public AuthenticationData AuthenticationData { get; private set; }
-
+		/// <summary>
+		/// Inicializa o client com os dados necessários para realizar o acesso a API.
+		/// </summary>
+		/// <param name="clientId">ID do app cadastrado no portal de desenvolvedor do Spotify.</param>
+		/// <param name="clientSecret">Secret gerado após o cadsatro do app no portal de desenvolvedor do Spofity.</param>
+		/// <param name="redirectUri">URL que será usado como callback no processo de autenticação.</param>
 		public SpotifyClient(string clientId, string clientSecret, Uri redirectUri) {
 
 			this.ClientId = clientId;
@@ -52,27 +41,77 @@ namespace SpotifyExam.Core {
 
 		}
 
+
+		/// <summary>
+		/// Client ID da aplicação cadastrada no Spotify.
+		/// </summary>
+		public string ClientId { get; private set; }
+
+		/// <summary>
+		/// Secret da aplicação  gerada no portal de desenvolvedor do Spotify.
+		/// </summary>
+		private string Secret { get; set; }
+
+
+		/// <summary>
+		/// Client REST para acesso a API de autenticação.
+		/// </summary>
+		private IRestClient AuthClient { get;  set; }
+
+		/// <summary>
+		/// Client REST para acesso a API.
+		/// </summary>
+		private IRestClient APIClient { get;  set; }
+
+		/// <summary>
+		/// Token de autorização.
+		/// </summary>
+		private string AuthorizationToken { get; set; }
+
+		/// <summary>
+		/// URI de callback que será usado na autenticação.
+		/// </summary>
+		public Uri CallbackUrl { get; private set; }
+
+		/// <summary>
+		/// Propriedade que armazena os dados da autenticação para uso nas requisições.
+		/// </summary>
+		public AuthenticationData AuthenticationData { get; private set; }
+
 		#region Public Authentication Methods
 
-		public Uri GenerateRedirectURL(string scope, bool showDialog) {
+		/// <summary>
+		/// Método que gera a URL para onde o usuário será redirecionado para autorizar o app a acessar a sua conta.
+		/// </summary>
+		/// <param name="scope">Lista de permissões de acesso aos dados de usuário.</param>
+		/// <param name="showDialog">Flag que indica se o usuário irá ter que aprovar o app toda vez que utilizar.</param>
+		/// <returns></returns>
+		public Uri GenerateRedirectURL(IEnumerable<string> scopes, bool showDialog) {
 
 			string formatString = "{0}/authorize/?client_id={1}&response_type=code&redirect_uri={2}&scope={3}&show_dialog={4}";
+
+			string scope = String.Join(" ", scopes.ToArray());
 
 			string url = string.Format(formatString, BASE_AUTH_URL, this.ClientId, this.CallbackUrl.ToString(), scope, showDialog.ToString());
 
 			return new Uri(url);
 		}
 
+		/// <summary>
+		/// Método que realiza a autenticação de acordo com o tipo e o token informado.
+		/// </summary>
+		/// <param name="token">Token.</param>
+		/// <param name="type">Tipo do token que será utilizado para a autenticação.</param>
+		/// <returns></returns>
 		public bool Authenticate(string token, TokenType type) {
 
 			RestRequest request = new RestRequest("/api/token", Method.POST);
 
-			string authorizationString = string.Format("{0}:{1}", this.ClientId, this.Secret);
+			string paylod = string.Format("{0}:{1}", this.ClientId, this.Secret);
 
-			byte[] bytePayload = Encoding.UTF8.GetBytes(authorizationString);
+			byte[] payloadByteArray = Encoding.UTF8.GetBytes(paylod);
 
-			request.AddHeader("Authorization", string.Format("Basic {0}", Convert.ToBase64String(bytePayload)));
-
+			request.AddHeader("Authorization", string.Format("Basic {0}", Convert.ToBase64String(payloadByteArray)));
 
 			switch (type) {
 
@@ -93,6 +132,10 @@ namespace SpotifyExam.Core {
 
 		#endregion
 
+		/// <summary>
+		/// Método que retorna os dados do usuário logado.
+		/// </summary>
+		/// <returns>Instancia de <see cref="UserInfo"/> com os dados do usuário logado no Spotify.</returns>
 		public UserInfo GetCurrentUserInfo() {
 
 			IRestRequest request = new RestRequest("/v1/me", Method.GET);
@@ -102,6 +145,12 @@ namespace SpotifyExam.Core {
 			return userInfo;
 		}
 
+		/// <summary>
+		/// Método que retorna todas as playlists de um usuário.
+		/// </summary>
+		/// <param name="userId">ID do usuário.</param>
+		/// <returns>
+		/// </returns>
 		public SpotifyCollection<Playlist> GetUserPlaylistCollection(string userId) {
 
 			IRestRequest request = new RestRequest(string.Format("/v1/users/{0}/playlists", userId), Method.GET);
@@ -111,6 +160,11 @@ namespace SpotifyExam.Core {
 			return response;
 		}
 
+		/// <summary>
+		/// Método que retorna todas as músicas de uma determinada playlist. 
+		/// </summary>
+		/// <param name="playlistTrack">Instancia do objeto <see cref="PlaylistTrackInfo"/> contendo os dados da playlist. </param>
+		/// <returns></returns>
 		public SpotifyCollection<PlaylistTrack> GetPlaylistTracks(PlaylistTrackInfo playlistTrack) {
 
 			Uri requestUri = new Uri(playlistTrack.Href);
@@ -126,13 +180,21 @@ namespace SpotifyExam.Core {
 
 		#region Private Methods
 
-		private T DoAPIRequest<T>(IRestRequest request) where T : BaseSpotifyObject {
+		/// <summary>
+		/// Wrapper para facilitar os requests a API do Spotify.
+		/// </summary>
+		/// <typeparam name="TResponse">Tipo que será retornado.</typeparam>
+		/// <param name="request">Informações do request (URL, verbo, corpo, etc).</param>
+		/// <returns></returns>
+		private TResponse DoAPIRequest<TResponse>(IRestRequest request) where TResponse : BaseSpotifyObject {
 
-			// Verifica se o client está autenticado, caso nao esteja tenta autenticar. 
+			// Verifica se o client está autenticado, caso nao esteja retorna uma exceção. 
 			if (this.AuthenticationData == null || string.IsNullOrWhiteSpace(this.AuthenticationData.AccessToken) == true) {
 				throw new InvalidOperationException("Dados de autenticação inválidos. Refaça o fluxo de autorização.");
 			}
 
+			// Verifica se o Access Token expirou, caso tenha expirado, tenta dar um refresh no token
+			// caso não consiga efetuar o refresh, retorna exception.
 			if (this.AuthenticationData.IsTokenExpired() == true) {
 
 				if (this.Authenticate(this.AuthenticationData.RefreshToken, TokenType.Refresh) == false) {
@@ -141,15 +203,22 @@ namespace SpotifyExam.Core {
 
 			}
 
+			// Adiciona o header de autenticação.
 			request.AddHeader("Authorization", string.Format("Bearer {0}", this.AuthenticationData.AccessToken));
 
 			IRestResponse response = this.APIClient.Execute(request);
 
-			T responseSerialized = JsonConvert.DeserializeObject<T>(response.Content);
+			TResponse responseSerialized = JsonConvert.DeserializeObject<TResponse>(response.Content);
 
 			return responseSerialized;
 		}
 
+		/// <summary>
+		/// Método que retorna o Access Token utilizando o Token de Autorização.
+		/// </summary>
+		/// <param name="authToken">Token de Autorização.</param>
+		/// <param name="request">Informações do request a API de autenticação.</param>
+		/// <returns></returns>
 		private bool GetAccessToken(string authToken, IRestRequest request) {
 			
 			request.AddParameter("grant_type", "authorization_code");
@@ -170,6 +239,12 @@ namespace SpotifyExam.Core {
 
 		}
 
+		/// <summary>
+		/// Método que atualiza o Access token expirado utilizando o RefresToken.
+		/// </summary>
+		/// <param name="refreshToken">Refresh Token.</param>
+		/// <param name="request">Informações do request a API de autenticação.</param>
+		/// <returns></returns>
 		private bool RefreshAccessToken(string refreshToken, IRestRequest request) {
 
 			if (this.AuthenticationData == null || string.IsNullOrWhiteSpace(this.AuthenticationData.RefreshToken) == true) {

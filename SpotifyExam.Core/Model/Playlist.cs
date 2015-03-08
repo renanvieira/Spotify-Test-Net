@@ -3,10 +3,19 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace SpotifyExam.Core.Model {
+	/// <summary>
+	/// Objeto que representa os dados de uma playlist do Spotify.
+	/// </summary>
 	public class Playlist : BaseSpotifyObject {
 
+		/// <summary>
+		/// Nome da playlist
+		/// </summary>
 		public string Name { get; set; }
 
+		/// <summary>
+		/// Informação de como acessar as músicas da playlist
+		/// </summary>
 		public PlaylistTrackInfo Tracks { get; set; }
 
 		/// <summary>
@@ -14,7 +23,9 @@ namespace SpotifyExam.Core.Model {
 		/// </summary>
 		/// <param name="userInfo">Informações de usuário.</param>
 		/// <param name="allTracksCollection">Coleção com as músicas disponíveis para montar a playlist.</param>
-		/// <returns></returns>
+		/// <returns>
+		///		Uma coleção contendo uma <see cref="Tuple{T1, T2}"/> com a letra e a instancia de <see cref="Track"/> com os dados da música.
+		/// </returns>
 		public static ICollection<Tuple<char, Track>> GeneratePlaylistUsingUserName(UserInfo userInfo, List<Track> allTracksCollection) {
 
 			if (userInfo == null) { throw new ArgumentNullException(nameof(userInfo)); }

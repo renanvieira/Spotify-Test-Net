@@ -6,6 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SpotifyExam.Core.Model {
+
+	/// <summary>
+	/// Classe abstrata para generalizar os tipos de objetos do Spotify e simplificar o tratamento de erros da API.
+	/// </summary>
 	public abstract class BaseSpotifyObject {
 
 		public BaseSpotifyObject() { }
